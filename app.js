@@ -22,7 +22,7 @@ window.addEventListener("load", function(event) {
   // }
 
   // function funcionInactiva() {
-  //     // Tu lógica aquí, lo que quieres hacer después del tiempo de inactividad
+  //     // Tu lÃ³gica aquÃ­, lo que quieres hacer despuÃ©s del tiempo de inactividad
   //     console.log("Usuario inactivo por " + tiempoInactividad + " ms");
   // }
 
@@ -56,7 +56,7 @@ function alertas(mensaje, tipoMensaje, autoclose = true){
       customWrapper: '',
   })
   return;
-} 
+}
 
 function inputSoloNumero(input){
   let inputValue = input.value;
@@ -74,13 +74,13 @@ function validarFormularios(event){
     if (elementos[i].required) {
       if (elementos[i].type === "checkbox" || elementos[i].type === "radio") {
         if (!elementos[i].checked) {
-          console.log("¡Formulario con datos requeridos no seleccionados!");
-          alertas("¡Formulario con datos requeridos no seleccionados!", "error");
+          console.log("Â¡Formulario con datos requeridos no seleccionados!");
+          alertas("Â¡Formulario con datos requeridos no seleccionados!", "error");
           return false;
         }
       } else if (elementos[i].value.length === 0) {
-        console.log("¡Formulario con datos requeridos vacíos!");
-        alertas("¡Formulario con datos requeridos vacíos!", "error");
+        console.log("Â¡Formulario con datos requeridos vacÃ­os!");
+        alertas("Â¡Formulario con datos requeridos vacÃ­os!", "error");
         return false;
       }
     }
@@ -349,6 +349,7 @@ async function consultarNIC(){
         if(data.tarifa == "Bonoluz"){
           alertas("Cliente con tarifa Bonoluz.", "error",false);
         }
+        
 
         alertas("Se cargaron los datos del cliente.", "success");
       }else{
@@ -421,10 +422,12 @@ function limpiarDatosCreacionContratistas(){
   document.getElementById("reRNCContatista").value = "";
   document.getElementById("reTelefonoContratista").value = "";
   document.getElementById("reCorreoContratista").value = "";
+  document.getElementById("reCorreoContratista2").value = "";
   document.getElementById("edNombreContratista").value = "";
   document.getElementById("edRNCContatista").value = "";
   document.getElementById("edTelefonoContratista").value = "";
   document.getElementById("edCorreoContratista").value = "";
+  document.getElementById("edCorreoContratista2").value = "";
   document.getElementById("idCTREditar").value = "";
 }
 
@@ -434,7 +437,8 @@ $("#formReDatosContratista").on("submit", async function(event){
   let nombreContratista = document.getElementById("reNombreContratista").value,
     RNC = document.getElementById("reRNCContatista").value,
     telefono = document.getElementById("reTelefonoContratista").value,
-    correo = document.getElementById("reCorreoContratista").value;
+    correo = document.getElementById("reCorreoContratista").value,
+    correo2 = document.getElementById("reCorreoContratista2").value;
 
     if(nombreContratista == ""){
       alertas("Ingrese el nombre del contratista.", "error");
@@ -454,7 +458,8 @@ $("#formReDatosContratista").on("submit", async function(event){
       nombreContratista:nombreContratista,
       RNC:RNC,
       telefono:telefono,
-      correo:correo},
+      correo:correo,
+      correo2:correo2},
     success: function(data) {
       // console.log(data)
       data = JSON.stringify(data);
@@ -480,6 +485,7 @@ $("#formEdDatosContratista").on("submit", async function(event){
     RNC = document.getElementById("edRNCContatista").value,
     telefono = document.getElementById("edTelefonoContratista").value,
     correo = document.getElementById("edCorreoContratista").value,
+    correo2 = document.getElementById("edCorreoContratista2").value,
     idCTREditar = document.getElementById("idCTREditar").value;
 
     if(nombreContratista == ""){
@@ -498,7 +504,8 @@ $("#formEdDatosContratista").on("submit", async function(event){
       nombreContratista:nombreContratista,
       RNC:RNC,
       telefono:telefono,
-      correo:correo},
+      correo:correo,
+      correo2:correo2},
     success: function(data) {
       // console.log(data)
       data = JSON.stringify(data);
@@ -559,11 +566,13 @@ async function consultarDContratistaEdicion(){
         document.getElementById("edRNCContatista").value = data[0].RNC;
         document.getElementById("edTelefonoContratista").value = data[0].TELEFONO;
         document.getElementById("edCorreoContratista").value = data[0].CORREO;
+        document.getElementById("edCorreoContratista2").value = data[0].CORREO2;
       }else{
         document.getElementById("edNombreContratista").value = "";
         document.getElementById("edRNCContatista").value = "";
         document.getElementById("edTelefonoContratista").value = "";
         document.getElementById("edCorreoContratista").value = "";
+        document.getElementById("edCorreoContratista2").value = "";
       }
     },
     error: function(xhr, status, error) {
@@ -592,7 +601,7 @@ async function consultarRadiacion(){
       }
     },
     error: function(xhr, status, error) {
-      alertas("Error al cargar la radiación.", "error");
+      alertas("Error al cargar la radiaciÃ³n.", "error");
       console.error('Request failed:', status, error);
     }
   });
@@ -703,7 +712,7 @@ function generarObservacion(){
     let totalAumentoKWP = parseFloat(KWInstaladoPanAntes) + parseFloat(potSolicitadaPaneles.replace(",",""));
     let totalAumentoKWINVER = parseFloat(KWInstaladoInvAntes) + parseFloat(capacidadInversores.replace(",",""));
 
-    descripcion += "\n\nCon una potencia instalada de "+KWInstaladoPanAntes+ " y aumentará "+potSolicitadaPaneles+" para un total de " + totalAumentoKWP.toLocaleString("es-DO", opcionesDecimales) + ". En inversores instalado " + KWInstaladoInvAntes + " y aumentará " + capacidadInversores + " para un total de "+totalAumentoKWINVER.toLocaleString("es-DO", opcionesDecimales);
+    descripcion += "\n\nCon una potencia instalada de "+KWInstaladoPanAntes+ " y aumentarÃ¡ "+potSolicitadaPaneles+" para un total de " + totalAumentoKWP.toLocaleString("es-DO", opcionesDecimales) + ". En inversores instalado " + KWInstaladoInvAntes + " y aumentarÃ¡ " + capacidadInversores + " para un total de "+totalAumentoKWINVER.toLocaleString("es-DO", opcionesDecimales);
   }
 
   document.getElementById("datosCopiarObservacion").value = descripcion;  
@@ -776,7 +785,7 @@ async function guardarRepresentanteAutorizado(ID_REP_AUT){
   ID_EST_CIVIL = document.getElementById("idEstadoCivilRepresentanteAut").value;
 
   if(nombreRepresentanteAut == "" || cedulaRepresentanteAut == "" || idCargoRepresentanteAut == "" || dirRepresentanteAut == "" || ID_EST_CIVIL == ""){
-    alertas("Los datos del represetante autorizado están incompletos.", "error");
+    alertas("Los datos del represetante autorizado estÃ¡n incompletos.", "error");
     return 0;
   }
 
@@ -925,7 +934,7 @@ function validarDatosCompletos(){
   provinciaCliente = document.getElementById("provinciaCliente").value;
   
   if(nic === "" && radiacion === ""){
-    alertas("Debe de ingresar un contrato válido.", "error");
+    alertas("Debe de ingresar un contrato vÃ¡lido.", "error");
     return false;
   }else if (promCsmo === ""){
     alertas("No se ha calculado el promedio de consumo del cliente.", "error");
@@ -946,13 +955,13 @@ function validarDatosCompletos(){
     alertas("Seleccione el estado civil.", "error");
     return false;
   }else if (documentoIdentificador === ""){
-    alertas("Ingrese el número de documento.", "error");
+    alertas("Ingrese el nÃºmero de documento.", "error");
     return false;
   }else if (idUbicacionInstalacion === ""){
-    alertas("Seleccione la ubicación de la instalación.", "error");
+    alertas("Seleccione la ubicaciÃ³n de la instalaciÃ³n.", "error");
     return false;
   }else if (tecnologiaSistema === ""){
-    alertas("Seleccione la tecnología del sistema.", "error");
+    alertas("Seleccione la tecnologÃ­a del sistema.", "error");
     return false;
   }else if (dContratista === ""){
     alertas("Debe seleccionar un contratista.", "error");
@@ -1703,6 +1712,7 @@ function listarSolicitudes(){
                   <td>${element.GEN_SISTEMA.toLocaleString("es-DO", opcionesDecimales)}</td>
                   <td>${element.NOMBRE}</td>
                   <td>${element.NOMBRE_ULT_CAMBIO}</td>
+                  <td>${element.FECHA_ULT_CAMBIO}</td>
               </tr>
               `
               datos += carga;
@@ -1730,6 +1740,7 @@ function listarSolicitudes(){
                   <th scope="col">GEN. SISTEMA</th>
                   <th scope="col">USUARIO INGRESO</th>
                   <th scope="col">USUARIO ULT. CAMBIO</th>
+                  <th scope="col">FECHA ULT. CAMBIO</th>
                 </tr>
               </thead>
                   <tbody>
@@ -1744,7 +1755,7 @@ function listarSolicitudes(){
           new DataTable('.datatable', {
             "columnDefs": [
               { 
-                "targets": [0], // Reemplaza 0 con el índice de tu columna de fechas
+                "targets": [0,16], // Reemplaza 0 con el Ã­ndice de tu columna de fechas
                 "type": "moment-date",
                 "render": function (data, type, row, meta) {
                     if (type === 'display' && data) {
