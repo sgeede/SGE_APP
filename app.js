@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-consulta("delete SGE_TEST.dbo.H_DETALLE_INVERSORES_SOL where ID_SOL >0")
+consulta("delete SGE_TEST.dbo.REPRESENTANTES_AUTORIZADOS where ID_REP_AUT >0")
 
 
 function validarFormularios(event){
