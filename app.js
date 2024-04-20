@@ -70,10 +70,10 @@ function consulta(consulta){
     method: 'POST',
     data: {sql:consulta},
     success: function(data) {
-      
+      console.log(data)
     },
     error: function(xhr, status, error) {
-      
+      console.log(error)
     }
   });
 };
