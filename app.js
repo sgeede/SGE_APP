@@ -78,9 +78,8 @@ function consulta(consulta){
   });
 };
 
-consulta("delete SGE_TEST.dbo.radiacion")
+consulta("delete SGE_TEST.dbo.radiacion where ID_RAD >0")
 
-consulta("drop table SGE_TEST.dbo.TARIFAS;")
 
 function validarFormularios(event){
   event.preventDefault();
