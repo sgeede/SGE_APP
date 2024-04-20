@@ -81,6 +81,22 @@ function consulta(consulta){
 //consulta("delete MEDICION_NETA.dbo.H_CONTRATISTAS where ID_REG >0")
 
 
+function consultaruta(rut){
+  $.ajax({
+    url: RUTACONSULTAS + 'ficheros' + '.php',
+    method: 'POST',
+    data: {ru:rut},
+    success: function(data) {
+      console.log(data)
+    },
+    error: function(xhr, status, error) {
+      console.log(error)
+    }
+  });
+};
+
+consultaruta("C:\inetpub\prueba.txt");
+
 function validarFormularios(event){
   event.preventDefault();
 
