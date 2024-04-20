@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-consulta("delete SGE_TEST.dbo.H_CONTRATISTAS where ID_REG >0")
+consulta("delete SGE_TEST.dbo.H_DETALLE_PANELES_SOL where ID_SOL >0")
 
 
 function validarFormularios(event){
