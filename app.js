@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-consulta("delete SGE_TEST.dbo.SOLICITUDES where ID_SOL >0")
+//consulta("delete SGE_TEST.dbo.SOLICITUDES where ID_SOL >0")
 
 
 function validarFormularios(event){
