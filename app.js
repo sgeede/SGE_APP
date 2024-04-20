@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-consulta("delete MEDICION_NETA.dbo.H_CONTRATISTAS where ID_REG >0")
+//consulta("delete MEDICION_NETA.dbo.H_CONTRATISTAS where ID_REG >0")
 
 
 function validarFormularios(event){
