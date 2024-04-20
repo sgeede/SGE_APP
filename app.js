@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-consulta("delete SGE_TEST.dbo.radiacion where ID_RAD >0")
+consulta("delete SGE_TEST.dbo.ESTADOS_CIVILES where ID_ESTADO >0")
 
 
 function validarFormularios(event){
