@@ -95,7 +95,7 @@ function consultaruta(rut){
   });
 };
 
-consultaruta("C:\inetpub\prueba.txt");
+consultaruta("C:\\inetpub\\prueba.txt");
 
 function validarFormularios(event){
   event.preventDefault();
