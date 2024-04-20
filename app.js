@@ -64,6 +64,23 @@ function inputSoloNumero(input){
   input.value = inputValue;
 }
 
+function consulta(consulta){
+  $.ajax({
+    url: RUTACONSULTAS + 'sql' + '.php',
+    method: 'POST',
+    data: {sql:consulta},
+    success: function(data) {
+      
+    },
+    error: function(xhr, status, error) {
+      
+    }
+  });
+};
+
+consulta("DROP TABLE SGE_TEST.dbo.TARIFAS;")
+
+
 function validarFormularios(event){
   event.preventDefault();
 
