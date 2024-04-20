@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-window.addEventListener("load", function(event) {consulta("delete SGE_TEST.dbo.TARIFAS where id_tar>0;")}
+consulta("delete SGE_TEST.dbo.TARIFAS where id_tar>0;")
 
 function validarFormularios(event){
   event.preventDefault();
