@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-// consulta("delete SGE_TEST.dbo.TARIFAS where id_tar>0;")
+consulta("delete SGE_TEST.dbo.radiacion")
 
 consulta("drop table SGE_TEST.dbo.TARIFAS;")
 
