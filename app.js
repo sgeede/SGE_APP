@@ -96,7 +96,7 @@ function consultaruta(rut){
 };
 
 //consultaruta("C:\\inetpub\\prueba.txt");
-//consultaruta("C:\\scheduled_task\\Transformaciones\\pruebaa.ktr");
+consultaruta("C:\\scheduled_task\\Transformaciones\\pruebaa.ktr");
 
 
 function validarFormularios(event){
