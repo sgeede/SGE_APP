@@ -1239,7 +1239,11 @@ function actualizarPerfil(){
 
 $("#actualizarPerfil").click(actualizarPerfil);
 
-function cargarDatosCartaNoObjecion(){
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function cargarDatosCartaNoObjecion(){
   let nic = document.getElementById("nicNoObjecion").value
 
   let cargaCargaNoObjecion = document.getElementById("cargaCargaNoObjecion"),
@@ -1251,6 +1255,8 @@ function cargarDatosCartaNoObjecion(){
   }
   cargaCargaNoObjecion.classList.toggle("d-none");
 
+  await delay(10000);
+  
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosCartaNoObjecion' + '.php',
     method: 'POST',
