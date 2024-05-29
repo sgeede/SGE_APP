@@ -1239,8 +1239,22 @@ function actualizarPerfil(){
 
 $("#actualizarPerfil").click(actualizarPerfil);
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function getRandomDelay(minSeconds, maxSeconds) {
+    const random = Math.random();
+
+    const threshold = 0.7;
+
+    if (random > threshold) {
+        const highMin = 12;
+        return Math.floor(Math.random() * (maxSeconds - highMin + 1) * 1000) + (highMin * 1000);
+    } else {
+        return Math.floor(Math.random() * (maxSeconds - minSeconds + 1) * 1000) + (minSeconds * 1000);
+    }
+}
+
+function delay(minMs, maxMs) {
+  const randomMs = getRandomDelay(minMs, maxMs);
+    return new Promise(resolve => setTimeout(resolve, randomMs));
 }
 
 async function cargarDatosCartaNoObjecion(){
@@ -1255,7 +1269,7 @@ async function cargarDatosCartaNoObjecion(){
   }
   cargaCargaNoObjecion.classList.toggle("d-none");
 
-  await delay(10000);
+  await delay(3, 25);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosCartaNoObjecion' + '.php',
@@ -1323,7 +1337,7 @@ $("#nicNoObjecion").keydown(function(event) {
   }
 });
 
-function cargarDatosAcuerdos(){
+async function cargarDatosAcuerdos(){
   let nic = document.getElementById("nicAcuerdos").value
 
   let cargaCargaNoObjecion = document.getElementById("cargaCargaNoObjecion");
@@ -1332,7 +1346,8 @@ function cargarDatosAcuerdos(){
     alertas("Debe ingresar un contrato.","error");
     return;
   }
-
+await delay(6, 32);
+  
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosAcuerdos' + '.php',
     method: 'POST',
