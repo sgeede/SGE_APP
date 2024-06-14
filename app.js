@@ -1269,7 +1269,7 @@ async function cargarDatosCartaNoObjecion(){
   }
   cargaCargaNoObjecion.classList.toggle("d-none");
 
-  await delay(3, 25);
+  // await delay(3, 25);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosCartaNoObjecion' + '.php',
