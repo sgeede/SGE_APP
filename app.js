@@ -1846,6 +1846,171 @@ function listarSolicitudes(){
     });
   }
 
+
+  function obtenerUltimoNoNulo(array) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        if (array[i].ENERGIA_ACUMULADA !== null) {
+            return array[i].ENERGIA_ACUMULADA;
+        }
+    }
+    return null; 
+}
+
+  $("#consultarHistoricoConsumo").click(listarHistoricoConsumo);
+  $("#NICH").keydown(function(event) {
+    if (event.keyCode === 13) {
+      listarHistoricoConsumo();
+    }
+  });
+  
+  function listarHistoricoConsumo(){
+    let NIC = document.getElementById("NICH").value;
+    let ANO = document.getElementById("ANOHISTORICO").value;
+
+    if(NIC == "" || NIC.length < 7 || isNaN(NIC)){
+      alertas("Verifique el NIC ingresado", "error");
+      return;
+    }
+
+    if(ANO == "" || isNaN(NIC)){
+      alertas("Seleccione el año a consultar", "error");
+      return;
+    }
+
+    $.ajax({
+        url: RUTACONSULTAS + "historicoConsumo" + ".php",
+        method: "POST",
+        dataType: 'json',
+        data: {NIC:NIC,ANO:ANO},
+        success: function(data) {
+          if (data && Object.keys(data).length > 0) {
+            // console.log(data)
+            contenedorExis = document.getElementById("listarHistoricoConsumo");
+            let consumos = JSON.parse(data);
+            consumos = Object.entries(consumos).map(([key, value]) => value);
+  
+            let datos = "";
+            // console.log(consumos)
+
+            const ultimoConsumo = consumos[consumos.length - 1];
+            // console.log(ultimoConsumo.ENERGIA_ACUMULADA);
+            
+            const ultimoConsumoEC = obtenerUltimoNoNulo(consumos)
+
+            document.getElementById("HCNombreCliente").value = ultimoConsumo.NOMBRE_CLT
+            document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC
+
+            consumos.forEach(element => {
+                carga = `
+                <tr>
+                    <td>${element.MES}</td>
+                    <td>${element.CSMO_EDENORTE}</td>
+                    <td>${element.INYECCION_CLT}</td>
+                    <td>${element.CSMO_NETO}</td>
+                    <td>${element.ENERGIA_ACUMULADA}</td>
+                    <td>${element.CSMO_NETO_CON_ENERGIA_ACUMULADA}</td>
+                    <td>${element.DESCUENTO_ENERGIA_ACUMULADA}</td>
+                    <td>${element.F_ULT_ACT}</td>
+                    <td>${element.KW_INV_INST.toLocaleString("es-DO", opcionesDecimales)}</td>
+                    <td>${element.KWP_INST.toLocaleString("es-DO", opcionesDecimales)}</td>
+                    <td>${element.TARIFA}</td>
+                </tr>
+                `
+                datos += carga;
+            });
+  
+            contenedor = `<div class="card recent-sales overflow-auto">
+            <div class="card-body bg-white">
+              <h5 class="card-title">Consumos <span>| Lista de consumos</span></h5>
+              <table class="table table-striped datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">MES</th>
+                    <th scope="col">CONSUMO EDENORTE</th>
+                    <th scope="col">INYECCION</th>
+                    <th scope="col">CONSUMO NETO</th>
+                    <th scope="col">ENERGIA ACUMULADA</th>
+                    <th scope="col">CONSUMO NETO CON ENERGIA ACUMULADA</th>
+                    <th scope="col">DESCUENTO ENERGIA ACUMULADA</th>
+                    <th scope="col">FECHA ULT. ACT. CONSUMOS</th>
+                    <th scope="col">KW INVERSORES</th>
+                    <th scope="col">KWP</th>
+                    <th scope="col">TARIFA</th>
+                  </tr>
+                </thead>
+                    <tbody>
+                        ${datos}
+                    </tbody>
+                </table>
+                </div>
+              </div>
+              `; 
+            contenedorExis.innerHTML = contenedor;
+   
+
+            $.fn.dataTable.ext.order['month-pre'] = function (data) {
+              var months = {
+                  'Enero': 0,
+                  'Febrero': 1,
+                  'Marzo': 2,
+                  'Abril': 3,
+                  'Mayo': 4,
+                  'Junio': 5,
+                  'Julio': 6,
+                  'Agosto': 7,
+                  'Septiembre': 8,
+                  'Octubre': 9,
+                  'Noviembre': 10,
+                  'Diciembre': 11
+              };
+              return months[data] !== undefined ? months[data] : -1;
+          };
+          
+            new DataTable('.datatable', {
+              "columnDefs": [
+                { 
+                  "targets": [7], // Reemplaza 0 con el Ã­ndice de tu columna de fechas
+                  "type": "moment-date",
+                  "render": function (data, type, row, meta) {
+                      if (type === 'display' && data) {
+                          // Formatear la fecha a "DD/MM/YYYY" con ceros a la izquierda
+                          var formattedDate = moment(data).format("DD/MM/YYYY");
+                          return formattedDate;
+                      } else {
+                          return data;
+                      }
+                  }
+              },
+                { 
+                    "targets": "_all",
+                    "render": function (data, type, row, meta) {
+                        return type === 'display' && typeof data === 'string' ?
+                            '<div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="' + data + '">' + data + '</div>' :
+                            data;
+                    }
+                },
+                { 
+                  "targets": [0], // Índice de la columna de meses
+                  "orderDataType": "month-pre"
+              }
+            ],
+              order: [[0, 'asc']],
+              scrollX: true,
+              "pageLength": 25,
+              pagingType: 'full_numbers',
+              "paging": false,
+              "searching": false,
+              "bLengthChange": false,
+              "ordering": false
+          }); 
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log(error)
+        }
+      });
+    }
+
   function listarContratistasVista(){
     $.ajax({
         url: RUTACONSULTAS + "listarContratistasVista" + ".php",
