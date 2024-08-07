@@ -1900,8 +1900,16 @@ function listarSolicitudes(){
             
             const ultimoConsumoEC = obtenerUltimoNoNulo(consumos)
 
-            document.getElementById("HCNombreCliente").value = ultimoConsumo.NOMBRE_CLT
-            document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC
+            try {
+              document.getElementById("HCNombreCliente").value = ultimoConsumo.NOMBRE_CLT
+              document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC
+            } catch (error) {
+              document.getElementById("HCNombreCliente").value = ""
+              document.getElementById("HCEnergiaAcumulada").value = ""
+              contenedorExis.innerHTML = "<h4 class='text-danger text-center'>Cliente no pertenecia al PMN en el año seleccionado :p</h4>"
+              alertas("Error al cargar los datos. Verifique el NIC.", "error");
+              return
+            }
 
             consumos.forEach(element => {
                 carga = `
@@ -2006,6 +2014,8 @@ function listarSolicitudes(){
               "bLengthChange": false,
               "ordering": false
           }); 
+          }else{
+            alertas("Error al cargar los datos. Verifique el NIC.", "error");
           }
         },
         error: function(xhr, status, error) {
