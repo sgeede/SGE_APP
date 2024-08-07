@@ -2009,6 +2009,7 @@ function listarSolicitudes(){
           }
         },
         error: function(xhr, status, error) {
+          alertas("Error al cargar los datos. Verifique el NIC.", "error");
           console.log(error)
         }
       });
