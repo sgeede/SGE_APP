@@ -1884,7 +1884,10 @@ function listarSolicitudes(){
         data: {NIC:NIC,ANO:ANO},
         success: function(data) {
           if (data && Object.keys(data).length > 0) {
-            // console.log(data)
+            if(data[0].ACCESO == 0){
+              alertas("No tienes permisos suficientes.", "warning");
+              return;
+            }
             contenedorExis = document.getElementById("listarHistoricoConsumo");
             let consumos = JSON.parse(data);
             consumos = Object.entries(consumos).map(([key, value]) => value);
