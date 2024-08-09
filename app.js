@@ -1906,7 +1906,7 @@ function listarSolicitudes(){
             } catch (error) {
               document.getElementById("HCNombreCliente").value = ""
               document.getElementById("HCEnergiaAcumulada").value = ""
-              contenedorExis.innerHTML = "<h4 class='text-danger text-center'>Cliente no pertenecia al PMN en el año seleccionado :p</h4>"
+              contenedorExis.innerHTML = "<h4 class='text-danger text-center'>Cliente no pertenecia al PMN en el año seleccionado.</h4>"
               alertas("Error al cargar los datos. Verifique el NIC.", "error");
               return
             }
