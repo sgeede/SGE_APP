@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-consulta("delete CONTROL_GESTION_GC.prueba.ESTADISTICAS_MEDICION_NETA where ID_REG >0")
+//consulta("delete CONTROL_GESTION_GC.prueba.ESTADISTICAS_MEDICION_NETA where ID_REG >0")
 
 
 function consultaruta(rut){
@@ -95,7 +95,7 @@ function consultaruta(rut){
   });
 };
 
-consultaruta("C:\\inetpub\\ingresos_medicion_neta\\prueba.txt");
+//consultaruta("C:\\inetpub\\ingresos_medicion_neta\\prueba.txt");
 //consultaruta("C:\\scheduled_task\\Transformaciones\\pruebaa.ktr");
 
 
