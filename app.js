@@ -1849,7 +1849,7 @@ function listarSolicitudes(){
 
   function obtenerUltimoNoNulo(array) {
     for (let i = array.length - 1; i >= 0; i--) {
-        if (array[i].ENERGIA_ACUMULADA !== null) {
+        if (array[i].ENERGIA_ACUMULADA !== null && array[i].ENERGIA_ACUMULADA !== "No Disponible") {
             return array[i].ENERGIA_ACUMULADA;
         }
     }
