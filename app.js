@@ -1902,7 +1902,7 @@ function listarSolicitudes(){
 
             try {
               document.getElementById("HCNombreCliente").value = ultimoConsumo.NOMBRE_CLT
-              document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC
+              document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC.toLocaleString("es-DO", opcionesDecimales)
             } catch (error) {
               document.getElementById("HCNombreCliente").value = ""
               document.getElementById("HCEnergiaAcumulada").value = ""
@@ -1915,12 +1915,12 @@ function listarSolicitudes(){
                 carga = `
                 <tr>
                     <td>${element.MES}</td>
-                    <td>${element.CSMO_EDENORTE}</td>
-                    <td>${element.INYECCION_CLT}</td>
-                    <td>${element.CSMO_NETO}</td>
-                    <td>${element.ENERGIA_ACUMULADA}</td>
-                    <td>${element.CSMO_NETO_CON_ENERGIA_ACUMULADA}</td>
-                    <td>${element.DESCUENTO_ENERGIA_ACUMULADA}</td>
+                    <td>${element.CSMO_EDENORTE.toLocaleString("es-DO", opcionesDecimales)}</td>
+                    <td>${element.INYECCION_CLT.toLocaleString("es-DO", opcionesDecimales)}</td>
+                    <td>${element.CSMO_NETO.toLocaleString("es-DO", opcionesDecimales)}</td>
+                    <td>${element.ENERGIA_ACUMULADA.toLocaleString("es-DO", opcionesDecimales)}</td>
+                    <td>${element.CSMO_NETO_CON_ENERGIA_ACUMULADA.toLocaleString("es-DO", opcionesDecimales)}</td>
+                    <td>${element.DESCUENTO_ENERGIA_ACUMULADA.toLocaleString("es-DO", opcionesDecimales)}</td>
                     <td>${element.F_ULT_ACT}</td>
                     <td>${element.KW_INV_INST.toLocaleString("es-DO", opcionesDecimales)}</td>
                     <td>${element.KWP_INST.toLocaleString("es-DO", opcionesDecimales)}</td>
