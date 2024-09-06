@@ -80,23 +80,6 @@ function consulta(consulta){
 
 //consulta("delete CONTROL_GESTION_GC.prueba.ESTADISTICAS_MEDICION_NETA where ID_REG >0")
 
-const createTableQuery = `
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DESCARGA_DOCUMENTOS')
-BEGIN
-    CREATE TABLE DESCARGA_DOCUMENTOS (
-        ID int IDENTITY(1,1) NOT NULL,
-        NIC int NOT NULL,
-        TIPO_DOCUMENTO nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-        USUARIO nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-        FECHA_REGISTRO datetime DEFAULT getdate() NOT NULL,
-        CONSTRAINT PK_DESCARGA_DOCUMENTOS PRIMARY KEY (ID)
-    );
-END
-`;
-
-// Ejecutar la consulta usando la función consulta
-consulta(createTableQuery);
-
 
 function consultaruta(rut){
   $.ajax({
