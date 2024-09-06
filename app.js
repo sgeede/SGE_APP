@@ -1258,7 +1258,8 @@ function delay(minMs, maxMs) {
 }
 
 async function cargarDatosCartaNoObjecion(){
-  let nic = document.getElementById("nicNoObjecion").value
+  let nic = document.getElementById("nicNoObjecion").value,
+  botonGenerar = document.getElementById("BTNnicNoObjecion")
 
   let cargaCargaNoObjecion = document.getElementById("cargaCargaNoObjecion"),
   switchFirmaDocumentos = document.getElementById("switchFirmaDocumentos").checked;
@@ -1268,14 +1269,18 @@ async function cargarDatosCartaNoObjecion(){
     return;
   }
   cargaCargaNoObjecion.classList.toggle("d-none");
-
-  // await delay(3, 25);
+  
+  botonGenerar.disabled = true;
+  await delay(3, 10);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosCartaNoObjecion' + '.php',
     method: 'POST',
     dataType: 'json',data: {NIC:nic},
     success: function(data) {
+      setTimeout(function() {
+          botonGenerar.disabled = false;
+      }, 4000);
       if (data && Object.keys(data).length > 0) {
 
         if(data[0].ACCESO == 0){
@@ -1324,6 +1329,7 @@ async function cargarDatosCartaNoObjecion(){
       cargaCargaNoObjecion.classList.toggle("d-none");
     },
     error: function(xhr, status, error) {
+      botonGenerar.disabled = false;
       alertas("Este contrato no ha sido ingresado.", "error");
       cargaCargaNoObjecion.classList.toggle("d-none");
       // console.error('Request failed:', status, error);
@@ -1340,7 +1346,8 @@ $("#nicNoObjecion").keydown(function(event) {
 });
 
 async function cargarDatosAcuerdos(){
-  let nic = document.getElementById("nicAcuerdos").value
+  let nic = document.getElementById("nicAcuerdos").value,
+  botonGenerar = document.getElementById("BTNnicAcuerdos")
 
   let cargaCargaNoObjecion = document.getElementById("cargaCargaNoObjecion");
 
@@ -1348,13 +1355,18 @@ async function cargarDatosAcuerdos(){
     alertas("Debe ingresar un contrato.","error");
     return;
   }
-await delay(6, 32);
+  botonGenerar.disabled = true;
+  // await delay(6, 32);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosAcuerdos' + '.php',
     method: 'POST',
     dataType: 'json',data: {NIC:nic},
     success: function(data) {
+      setTimeout(function() {
+          botonGenerar.disabled = false;
+      }, 4000);
+      
       if (data && Object.keys(data).length > 0) {
 
         if(data[0].ACCESO == 0){
@@ -1412,6 +1424,7 @@ await delay(6, 32);
       }
     },
     error: function(xhr, status, error) {
+      botonGenerar.disabled = false;
       alertas("Este contrato no ha sido ingresado.", "error");
       cargaCargaNoObjecion.classList.toggle("d-none");
       // console.error('Request failed:', status, error);
