@@ -1088,6 +1088,12 @@ async function guardarSolicitud(){
           alertas("No tienes permisos suficientes.", "warning");
           return;
         }else{
+
+          if(data[0].ID_SOL == "ERROR"){
+            alertas(data[1].MENSAJE_ERROR, "error");
+            return;
+          }
+          
           console.log(data[0].ID_SOL)
           guardarDetalleInversores(data[0].ID_SOL)
           guardarDetallePaneles(data[0].ID_SOL)
@@ -1302,6 +1308,7 @@ async function cargarDatosCartaNoObjecion(){
           NOMBRE_CTR: data[0].NOMBRE_CTR,
           DESC_SOL: data[0].DESC_SOL,
           CIRCUITO: data[0].CIRCUITO,
+          ID_SOL: data[0].ID_SOL,
         };
         
         let queryParamsParametrosObj = Object.entries(parametrosObj)
@@ -1398,6 +1405,7 @@ async function cargarDatosAcuerdos(){
           CON_TRANSFORMADOR: data[0].CON_TRANSFORMADOR,
           KW_INVERSORES: data[0].INVERSORES_KW,
           VOLTAJE: data[0].VOLTAJE,
+          ID_SOL: data[0].ID_SOL,
         };
         
         let queryParamsParametrosObj = Object.entries(parametrosObj)
