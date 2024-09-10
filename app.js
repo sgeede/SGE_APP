@@ -1083,18 +1083,16 @@ async function guardarSolicitud(){
     },
     success: function(data) {
       if (data && Object.keys(data).length > 0) {
-        console.log(data[0]);
         if(data[0].ACCESO == 0){
           alertas("No tienes permisos suficientes.", "warning");
           return;
         }else{
-
+          
+          // console.log(data[0].ID_SOL)
           if(data[0].ID_SOL == "ERROR"){
             alertas(data[1].MENSAJE_ERROR, "error");
             return;
           }
-          
-          console.log(data[0].ID_SOL)
           guardarDetalleInversores(data[0].ID_SOL)
           guardarDetallePaneles(data[0].ID_SOL)
           alertas("Solicitud ingresada.", "success");
@@ -1174,6 +1172,7 @@ async function modificarSolicitud(){
   let ID_SOL = document.getElementById("ID_SOL").value
   nombreClt = document.getElementById("nombreCliente").value,
   conexionTransformador = document.getElementById("conexionTransformador").value,
+  SidUbicacionInstalacion = document.getElementById("SidUbicacionInstalacion").value,
   idTipoDocumento = obtenerIDTipoDocumentos(),
   documentoIdentificador = document.getElementById("documentoIdentificador").value,
   tarifaCliente = document.getElementById("tarifaCliente").value,
@@ -1199,7 +1198,8 @@ async function modificarSolicitud(){
       GEN_SISTEMA:generacionPaneles,
       CON_TRANSFORMADOR:conexionTransformador,
       ID_REP_AUT:ID_REP_AUT,
-      CoordenadasCliente:CoordenadasCliente
+      CoordenadasCliente:CoordenadasCliente,
+      SidUbicacionInstalacion:SidUbicacionInstalacion
     },
     success: function(data) {
       if (data && Object.keys(data).length > 0) {
@@ -1275,9 +1275,9 @@ async function cargarDatosCartaNoObjecion(){
     return;
   }
   cargaCargaNoObjecion.classList.toggle("d-none");
-  
+
   botonGenerar.disabled = true;
-  await delay(3, 10);
+  // await delay(3, 25);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosCartaNoObjecion' + '.php',
@@ -1293,7 +1293,7 @@ async function cargarDatosCartaNoObjecion(){
           alertas("No tienes permisos suficientes.", "warning");
           return;
         }
-
+        
         let iframe = document.getElementById("iframeCartaNoObjecion");
         let parametrosObj = {
           firmarDocumentos:switchFirmaDocumentos,
@@ -1363,6 +1363,7 @@ async function cargarDatosAcuerdos(){
     return;
   }
   botonGenerar.disabled = true;
+
   // await delay(6, 32);
   
   $.ajax({
@@ -1380,7 +1381,7 @@ async function cargarDatosAcuerdos(){
           alertas("No tienes permisos suficientes.", "warning");
           return;
         }
-
+        
         let iframe = document.getElementById("iframeCartaNoObjecion");
         let parametrosObj = {
           NIC: data[0].NIC,
@@ -1584,6 +1585,7 @@ async function consultarSolicitud(){
     KWInstaladoPanAntes = document.getElementById("KWInstaladoPanAntes"),
     KWInstaladoInvAntes = document.getElementById("KWInstaladoInvAntes"),
     idEstadoCivilRepresentanteAut = document.getElementById("idEstadoCivilRepresentanteAut");
+    SidUbicacionInstalacion = document.getElementById("SidUbicacionInstalacion");
     
     if(NIC == "" || NIC.length < 7 || isNaN(NIC)){
       alertas("Verifique el NIC ingresado", "error");
@@ -1612,7 +1614,8 @@ async function consultarSolicitud(){
         valorRadiacion.value = data.RADIACION;
         KWInstaladoPanAntes.value = data.KW_PAN_INST_ACT;
         KWInstaladoInvAntes.value = data.KW_INV_INST_ACT;
-        
+
+        SidUbicacionInstalacion. value = data.ID_UBI_PROY;
         STarifa.value = data.TARIFA;
         SConTransformador.value = data.CON_TRANSFORMADOR;
 
