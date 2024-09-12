@@ -1890,6 +1890,8 @@ function listarSolicitudes(){
   async function listarHistoricoConsumo(){
     let NIC = document.getElementById("NICH").value;
     let ANO = document.getElementById("ANOHISTORICO").value;
+    contenedorExis = document.getElementById("listarHistoricoConsumo");
+  
 
     if(NIC == "" || NIC.length < 7 || isNaN(NIC)){
       alertas("Verifique el NIC ingresado", "error");
@@ -1900,7 +1902,13 @@ function listarSolicitudes(){
       alertas("Seleccione el año a consultar", "error");
       return;
     }
-
+    
+    contenedorExis.innerHTML = "<div class='w-100 text-center'>
+              <div class='spinner-border' role='status'>
+                <span class='visually-hidden'>Loading...</span>
+              </div>
+            </div>"
+    
     await delay(6, 10);
 
     $.ajax({
@@ -1914,7 +1922,7 @@ function listarSolicitudes(){
               alertas("No tienes permisos suficientes.", "warning");
               return;
             }
-            contenedorExis = document.getElementById("listarHistoricoConsumo");
+
             let consumos = JSON.parse(data);
             consumos = Object.entries(consumos).map(([key, value]) => value);
   
