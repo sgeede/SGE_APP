@@ -1277,7 +1277,7 @@ async function cargarDatosCartaNoObjecion(){
   cargaCargaNoObjecion.classList.toggle("d-none");
 
   botonGenerar.disabled = true;
-  // await delay(3, 25);
+  await delay(10, 25);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosCartaNoObjecion' + '.php',
@@ -1364,7 +1364,7 @@ async function cargarDatosAcuerdos(){
   }
   botonGenerar.disabled = true;
 
-  // await delay(6, 32);
+  await delay(15, 32);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosAcuerdos' + '.php',
