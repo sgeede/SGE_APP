@@ -1903,7 +1903,7 @@ function listarSolicitudes(){
       return;
     }
     
-    contenedorExis.innerHTML = "<div class='w-100 text-center'><div class='spinner-border' role='status'><span class='visually-hidden'>Loading...</span></div></div>"
+    contenedorExis.innerHTML = "<div class='w-100 text-center' style='height: 40vh; align-content: center;'><div class='spinner-border' role='status'><span class='visually-hidden'>Loading...</span></div></div>"
     
     await delay(6, 10);
 
