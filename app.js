@@ -1277,7 +1277,7 @@ async function cargarDatosCartaNoObjecion(){
   cargaCargaNoObjecion.classList.toggle("d-none");
 
   botonGenerar.disabled = true;
-  await delay(10, 25);
+  ay(10, 25);
   
   $.ajax({
     url: RUTACONSULTAS + 'cargarDatosCartaNoObjecion' + '.php',
@@ -1887,7 +1887,7 @@ function listarSolicitudes(){
     }
   });
   
-  function listarHistoricoConsumo(){
+  async function listarHistoricoConsumo(){
     let NIC = document.getElementById("NICH").value;
     let ANO = document.getElementById("ANOHISTORICO").value;
 
