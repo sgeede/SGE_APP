@@ -1890,7 +1890,7 @@ function listarSolicitudes(){
   async function listarHistoricoConsumo(){
     let NIC = document.getElementById("NICH").value;
     let ANO = document.getElementById("ANOHISTORICO").value;
-    contenedorExis = document.getElementById("listarHistoricoConsumo");
+    let contenedorExis = document.getElementById("listarHistoricoConsumo");
   
 
     if(NIC == "" || NIC.length < 7 || isNaN(NIC)){
