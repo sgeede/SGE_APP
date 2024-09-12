@@ -1901,6 +1901,8 @@ function listarSolicitudes(){
       return;
     }
 
+    await delay(6, 10);
+
     $.ajax({
         url: RUTACONSULTAS + "historicoConsumo" + ".php",
         method: "POST",
