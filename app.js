@@ -78,7 +78,7 @@ function consulta(consulta){
   });
 };
 
-consulta("delete CONTROL_GESTION_GC.prueba.HISTORICO_CSMO_INC where ID >100")
+//consulta("delete CONTROL_GESTION_GC.prueba.HISTORICO_CSMO_INC where ID >100")
 
 
 function consultaruta(rut){
