@@ -96,11 +96,11 @@ function consultaruta(rut){
 };
 
 //consultaruta("C:\\inetpub\\ingresos_medicion_neta\\prueba.txt");
-//consultaruta("C:\\scheduled_task\\Transformaciones\\pruebaa.ktr");
+consultaruta("C:\\scheduled_task\\Transformaciones\\pruebaa.ktr");
 
 
 function validarFormularios(event){
-  event.preventDefault();
+  event.preventDefault()
 
   const formulario = event.target;
   const elementos = formulario.getElementsByTagName("input");
