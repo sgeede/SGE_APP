@@ -1048,6 +1048,11 @@ async function guardarSolicitud(){
   potSolicitadaPaneles = document.getElementById("potSolicitadaPaneles").value.replace(",",""),
   KW_INV_INST_ACT = document.getElementById("KWInstaladoInvAntes").value.replace(",",""),
   KW_PAN_INST_ACT = document.getElementById("KWInstaladoPanAntes").value.replace(",","");
+
+  if(nic == "" || nic == 0){
+    alertas("Debe ingresar un contrato.","error");
+    return;
+  }
   
   $.ajax({
     url: RUTACONSULTAS + 'ActualizarSolicitud' + '.php',
