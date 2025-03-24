@@ -2129,3 +2129,271 @@ function listarSolicitudes(){
         }
       });
     }
+
+
+$("#formeqMarcaInversor").on("submit", async function(event) {
+if (!validarFormularios(event)) { return; }
+
+    let eqMarcaInversor = document.getElementById("eqMarcaInversor").value,
+    eqChInversor = document.getElementById("eqChInversor").checked,
+    eqCertificacionInversor = document.getElementById("eqCertificacionInversor").files[0];
+
+if (eqMarcaInversor == "") {
+    alertas("Ingrese la marca del inversor.", "error");
+    return;
+} else if (!eqChInversor) {
+    alertas("Debe confirmar que el documento fue validado.", "error");
+    return;
+} else if (!eqCertificacionInversor) {
+    alertas("Debe adjuntar un documento en formato PDF.", "error");
+    return;
+} else if (eqCertificacionInversor.type !== "application/pdf") {
+    alertas("El archivo debe estar en formato PDF.", "error");
+    return;
+}
+
+let formData = new FormData();
+formData.append("eqMarcaInversor", eqMarcaInversor);
+formData.append("eqCertificacionInversor", eqCertificacionInversor);
+
+$.ajax({
+    url: RUTACONSULTAS + 'registrarMarcaInversores.php',
+    method: 'POST',
+    dataType: 'json',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(data) {
+        console.log(data)
+    if (data && Object.keys(data).length > 0) {
+        if(data[0].ACCESO == 0){
+            alertas("No tienes permisos suficientes.", "warning");
+            return;
+          }
+
+          if(typeof data === "string") {
+                data = JSON.parse(data);
+          }
+
+          if(data[0].ERROR == "ERROR"){
+            alertas(data[0].MENSAJE_ERROR, "error");
+            return;
+          }
+
+          document.getElementById("formeqMarcaInversor").reset();
+
+        alertas("La marca fue registrada correctamente.", "success");
+    } else {
+        alertas("Error al registrar la marca.", "error");
+    }
+    },
+    error: function(xhr, status, error) {
+        alertas("Error al registrar.", "error");
+        console.error('Request failed:', status, error);
+    }
+});
+});
+
+
+$("#formeqMarcaModFov").on("submit", async function(event) {
+    if (!validarFormularios(event)) { return; }
+    
+        let eqMarcaModFov = document.getElementById("eqMarcaModFov").value,
+        eqChModFov = document.getElementById("eqChModFov").checked,
+        eqCertificacionModFov = document.getElementById("eqCertificacionModFov").files[0];
+    
+    if (eqMarcaModFov == "") {
+        alertas("Ingrese la marca del módulo fotovoltaico.", "error");
+        return;
+    } else if (!eqChModFov) {
+        alertas("Debe confirmar que el documento fue validado.", "error");
+        return;
+    } else if (!eqCertificacionModFov) {
+        alertas("Debe adjuntar un documento en formato PDF.", "error");
+        return;
+    } else if (eqCertificacionModFov.type !== "application/pdf") {
+        alertas("El archivo debe estar en formato PDF.", "error");
+        return;
+    }
+    
+    let formData = new FormData();
+    formData.append("eqMarcaInversor", eqMarcaModFov);
+    formData.append("eqCertificacionInversor", eqCertificacionModFov);
+    
+    $.ajax({
+        url: RUTACONSULTAS + 'registrarMarcaPaneles.php',
+        method: 'POST',
+        dataType: 'json',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            console.log(data)
+        if (data && Object.keys(data).length > 0) {
+            if(data[0].ACCESO == 0){
+                alertas("No tienes permisos suficientes.", "warning");
+                return;
+              }
+    
+              if(typeof data === "string") {
+                    data = JSON.parse(data);
+              }
+    
+              if(data[0].ERROR == "ERROR"){
+                alertas(data[0].MENSAJE_ERROR, "error");
+                return;
+              }
+              
+              document.getElementById("formeqMarcaModFov").reset();
+    
+            alertas("La marca fue registrada correctamente.", "success");
+        } else {
+            alertas("Error al registrar la marca.", "error");
+        }
+        },
+        error: function(xhr, status, error) {
+            alertas("Error al registrar.", "error");
+            console.error('Request failed:', status, error);
+        }
+    });
+    });
+
+
+    $("#formeqModeloInversor").on("submit", async function(event) {
+        if (!validarFormularios(event)) { return; }
+        
+            let eqMarcaID = document.getElementById("eqMarcaInversorID").value,
+            eqModelo = document.getElementById("eqMarcaModeloInversor").value,
+            eqChModFov = document.getElementById("eqChModeloInversor").checked,
+            eqCertificacionModFov = document.getElementById("eqCertificacionModeloInversor").files[0];
+        
+        if (eqMarcaID == "") {
+            alertas("Seleccione la marca del inversor.", "error");
+            return;
+        } else if (eqModelo == "") {
+            alertas("Ingrese el modelo del inversor.", "error");
+            return;
+        }else if (!eqChModFov) {
+            alertas("Debe confirmar que el documento fue validado.", "error");
+            return;
+        } else if (!eqCertificacionModFov) {
+            alertas("Debe adjuntar un documento en formato PDF.", "error");
+            return;
+        } else if (eqCertificacionModFov.type !== "application/pdf") {
+            alertas("El archivo debe estar en formato PDF.", "error");
+            return;
+        }
+        
+        let formData = new FormData();
+        formData.append("eqMarcaID", eqMarcaID);
+        formData.append("eqModelo", eqModelo);
+        formData.append("eqCertificacion", eqCertificacionModFov);
+        
+        $.ajax({
+            url: RUTACONSULTAS + 'registrarModeloInversor.php',
+            method: 'POST',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data)
+            if (data && Object.keys(data).length > 0) {
+                if(data[0].ACCESO == 0){
+                    alertas("No tienes permisos suficientes.", "warning");
+                    return;
+                  }
+        
+                  if(typeof data === "string") {
+                        data = JSON.parse(data);
+                  }
+        
+                  if(data[0].ERROR == "ERROR"){
+                    alertas(data[0].MENSAJE_ERROR, "error");
+                    return;
+                  }
+                  
+                  document.getElementById("formeqModeloInversor").reset();
+                  $('select').val("").trigger('change.select2');
+        
+                alertas("El modelo fue registrado correctamente.", "success");
+            } else {
+                alertas("Error al registrar modelo.", "error");
+            }
+            },
+            error: function(xhr, status, error) {
+                alertas("Error al registrar.", "error");
+                console.error('Request failed:', status, error);
+            }
+        });
+        });
+
+
+        $("#formeqModeloModFov").on("submit", async function(event) {
+            if (!validarFormularios(event)) { return; }
+            
+                let eqMarcaID = document.getElementById("eqMarcaModFovID").value,
+                eqModelo = document.getElementById("eqMarcaModeloModFov").value,
+                eqChModFov = document.getElementById("eqChModeloModFov").checked,
+                eqCertificacionModFov = document.getElementById("eqCertificacionModeloFov").files[0];
+            
+            if (eqMarcaID == "") {
+                alertas("Seleccione la marca del módulo fotovoltaico.", "error");
+                return;
+            } else if (eqModelo == "") {
+                alertas("Ingrese el modelo del módulo fotovoltaico.", "error");
+                return;
+            }else if (!eqChModFov) {
+                alertas("Debe confirmar que el documento fue validado.", "error");
+                return;
+            } else if (!eqCertificacionModFov) {
+                alertas("Debe adjuntar un documento en formato PDF.", "error");
+                return;
+            } else if (eqCertificacionModFov.type !== "application/pdf") {
+                alertas("El archivo debe estar en formato PDF.", "error");
+                return;
+            }
+            
+            let formData = new FormData();
+            formData.append("eqMarcaID", eqMarcaID);
+            formData.append("eqModelo", eqModelo);
+            formData.append("eqCertificacion", eqCertificacionModFov);
+            
+            $.ajax({
+                url: RUTACONSULTAS + 'registrarModeloPaneles.php',
+                method: 'POST',
+                dataType: 'json',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    console.log(data)
+                if (data && Object.keys(data).length > 0) {
+                    if(data[0].ACCESO == 0){
+                        alertas("No tienes permisos suficientes.", "warning");
+                        return;
+                      }
+            
+                      if(typeof data === "string") {
+                            data = JSON.parse(data);
+                      }
+            
+                      if(data[0].ERROR == "ERROR"){
+                        alertas(data[0].MENSAJE_ERROR, "error");
+                        return;
+                      }
+                      
+                      document.getElementById("formeqModeloModFov").reset();
+                      $('select').val("").trigger('change.select2');
+            
+                    alertas("El modelo fue registrado correctamente.", "success");
+                } else {
+                    alertas("Error al registrar modelo.", "error");
+                }
+                },
+                error: function(xhr, status, error) {
+                    alertas("Error al registrar.", "error");
+                    console.error('Request failed:', status, error);
+                }
+            });
+            });
