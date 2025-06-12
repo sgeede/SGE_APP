@@ -22,7 +22,7 @@ window.addEventListener("load", function(event) {
   // }
 
   // function funcionInactiva() {
-  //     // Tu lÃ³gica aquÃ­, lo que quieres hacer despuÃ©s del tiempo de inactividad
+  //     // Tu lógica aquí­, lo que quieres hacer después del tiempo de inactividad
   //     console.log("Usuario inactivo por " + tiempoInactividad + " ms");
   // }
 
@@ -113,8 +113,8 @@ function validarFormularios(event){
           return false;
         }
       } else if (elementos[i].value.length === 0) {
-        console.log("Â¡Formulario con datos requeridos vacÃ­os!");
-        alertas("Â¡Formulario con datos requeridos vacÃ­os!", "error");
+        console.log("Â¡Formulario con datos requeridos vací­os!");
+        alertas("Â¡Formulario con datos requeridos vací­os!", "error");
         return false;
       }
     }
@@ -635,7 +635,7 @@ async function consultarRadiacion(){
       }
     },
     error: function(xhr, status, error) {
-      alertas("Error al cargar la radiaciÃ³n.", "error");
+      alertas("Error al cargar la radiación.", "error");
       console.error('Request failed:', status, error);
     }
   });
@@ -746,7 +746,7 @@ function generarObservacion(){
     let totalAumentoKWP = parseFloat(KWInstaladoPanAntes) + parseFloat(potSolicitadaPaneles.replace(",",""));
     let totalAumentoKWINVER = parseFloat(KWInstaladoInvAntes) + parseFloat(capacidadInversores.replace(",",""));
 
-    descripcion += "\n\nCon una potencia instalada de "+KWInstaladoPanAntes+ " y aumentarÃ¡ "+potSolicitadaPaneles+" para un total de " + totalAumentoKWP.toLocaleString("es-DO", opcionesDecimales) + ". En inversores instalado " + KWInstaladoInvAntes + " y aumentarÃ¡ " + capacidadInversores + " para un total de "+totalAumentoKWINVER.toLocaleString("es-DO", opcionesDecimales);
+    descripcion += "\n\nCon una potencia instalada de "+KWInstaladoPanAntes+ " y aumentará "+potSolicitadaPaneles+" para un total de " + totalAumentoKWP.toLocaleString("es-DO", opcionesDecimales) + ". En inversores instalado " + KWInstaladoInvAntes + " y aumentará " + capacidadInversores + " para un total de "+totalAumentoKWINVER.toLocaleString("es-DO", opcionesDecimales);
   }
 
   document.getElementById("datosCopiarObservacion").value = descripcion;  
@@ -819,7 +819,7 @@ async function guardarRepresentanteAutorizado(ID_REP_AUT){
   ID_EST_CIVIL = document.getElementById("idEstadoCivilRepresentanteAut").value;
 
   if(nombreRepresentanteAut == "" || cedulaRepresentanteAut == "" || idCargoRepresentanteAut == "" || dirRepresentanteAut == "" || ID_EST_CIVIL == ""){
-    alertas("Los datos del represetante autorizado estÃ¡n incompletos.", "error");
+    alertas("Los datos del represetante autorizado están incompletos.", "error");
     return 0;
   }
 
@@ -968,7 +968,7 @@ function validarDatosCompletos(){
   provinciaCliente = document.getElementById("provinciaCliente").value;
   
   if(nic === "" && radiacion === ""){
-    alertas("Debe de ingresar un contrato vÃ¡lido.", "error");
+    alertas("Debe de ingresar un contrato válido.", "error");
     return false;
   }else if (promCsmo === ""){
     alertas("No se ha calculado el promedio de consumo del cliente.", "error");
@@ -989,13 +989,13 @@ function validarDatosCompletos(){
     alertas("Seleccione el estado civil.", "error");
     return false;
   }else if (documentoIdentificador === ""){
-    alertas("Ingrese el nÃºmero de documento.", "error");
+    alertas("Ingrese el número de documento.", "error");
     return false;
   }else if (idUbicacionInstalacion === ""){
-    alertas("Seleccione la ubicaciÃ³n de la instalaciÃ³n.", "error");
+    alertas("Seleccione la ubicación de la instalación.", "error");
     return false;
   }else if (tecnologiaSistema === ""){
-    alertas("Seleccione la tecnologÃ­a del sistema.", "error");
+    alertas("Seleccione la tecnologí­a del sistema.", "error");
     return false;
   }else if (dContratista === ""){
     alertas("Debe seleccionar un contratista.", "error");
@@ -1841,7 +1841,7 @@ function listarSolicitudes(){
           new DataTable('.datatable', {
             "columnDefs": [
               { 
-                "targets": [0,16], // Reemplaza 0 con el Ã­ndice de tu columna de fechas
+                "targets": [0,16], // Reemplaza 0 con el í­ndice de tu columna de fechas
                 "type": "moment-date",
                 "render": function (data, type, row, meta) {
                     if (type === 'display' && data) {
@@ -2014,7 +2014,7 @@ function listarSolicitudes(){
             new DataTable('.datatable', {
               "columnDefs": [
                 { 
-                  "targets": [7], // Reemplaza 0 con el Ã­ndice de tu columna de fechas
+                  "targets": [7], // Reemplaza 0 con el í­ndice de tu columna de fechas
                   "type": "moment-date",
                   "render": function (data, type, row, meta) {
                       if (type === 'display' && data) {
