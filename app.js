@@ -665,17 +665,60 @@ function copiarObservacion(elemento){
   }
 }
 
+$("#NIC").change(() => { 
+  if(obtenerIDTipoSolcitud() == 2){
+    document.getElementById("KWInstaladoInvAntes").value = "";
+    document.getElementById("KWInstaladoPanAntes").value = "";
+    document.getElementsByName("tipoSolicitud")[0].checked = true;
+  }
+
+ });
+
+
 $("input[name='tipoSolicitud']").on("change", function() {
   generarDescripcion();
   let camposInstalado = document.getElementById("insAntAumento"),
     KWInstaladoInvAntes = document.getElementById("KWInstaladoInvAntes"),
-    KWInstaladoPanAntes = document.getElementById("KWInstaladoPanAntes");
+    KWInstaladoPanAntes = document.getElementById("KWInstaladoPanAntes"),
+    NIC = document.getElementById("NIC").value;
     KWInstaladoInvAntes.value = "";
     KWInstaladoPanAntes.value = "";
   if(obtenerIDTipoSolcitud() == 2){
     // console.log("Aumento")
-    camposInstalado.classList.remove("d-none")
-    camposInstalado.classList.add("d-block")
+    if(NIC == ""){
+      document.getElementsByName("tipoSolicitud")[0].checked = true;
+      alertas("Debe ingresar el NIC que realizará el aumento.", "error");
+      return;
+    }
+
+ 
+  $.ajax({
+    url: RUTACONSULTAS + 'consultarCapacidadInst' + '.php',
+    method: 'POST',
+    dataType: 'json',
+    data: {NIC:NIC},
+    success: function(data) {
+      if (data && Object.keys(data).length > 0) {
+        KWInstaladoInvAntes.value = data[0].KW_INV_INST;
+        KWInstaladoPanAntes.value = data[0].KWP_INST;
+
+      camposInstalado.classList.remove("d-none")
+      camposInstalado.classList.add("d-block")
+        
+      }else{
+        // document.getElementById("valorRadiacion").value = "";
+        KWInstaladoInvAntes.value = "";
+        KWInstaladoPanAntes.value = "";
+      }
+    },
+    error: function(xhr, status, error) {
+      alertas("Error al cargar la capacidad instalada.", "error");
+      console.error('Request failed:', status, error);
+    }
+  });
+
+
+
   }else{
     // console.log("Demas")
     camposInstalado.classList.remove("d-block")
@@ -1737,6 +1780,9 @@ async function consultarNICModificacion(){
 function limpiarCampos(){
   document.querySelectorAll('form').forEach(form => form.reset());
   $('select').val("").trigger('change.select2');
+
+  document.getElementById("NIC").value = "";
+  document.getElementsByName("tipoSolicitud")[0].checked = true;
 }
 
 $("#SConTransformador").change(function(){
