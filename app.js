@@ -1143,6 +1143,8 @@ async function guardarSolicitud(){
           guardarDetalleInversores(data[0].ID_SOL)
           guardarDetallePaneles(data[0].ID_SOL)
           alertas("Solicitud ingresada.", "success");
+          document.getElementById("NIC").value = "";
+          document.getElementsByName("tipoSolicitud")[0].checked = true;
           limpiarCampos();
         }
       }else{
@@ -1780,9 +1782,6 @@ async function consultarNICModificacion(){
 function limpiarCampos(){
   document.querySelectorAll('form').forEach(form => form.reset());
   $('select').val("").trigger('change.select2');
-
-  document.getElementById("NIC").value = "";
-  document.getElementsByName("tipoSolicitud")[0].checked = true;
 }
 
 $("#SConTransformador").change(function(){
