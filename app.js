@@ -1981,8 +1981,7 @@ function listarSolicitudes(){
 
             try {
               document.getElementById("HCNombreCliente").value = ultimoConsumo.NOMBRE_CLT
-              document.getElementById("HCFechaIngreso").value = ultimoConsumo.FECHA_INGRESO
-              console.log(ultimoConsumo.FECHA_INGRESO);
+              document.getElementById("HCFechaIngreso").value = ultimoConsumo.FECHA_INGRESO.date.split(" ")[0].split("-").reverse().join("/");
               document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC.toLocaleString("es-DO", opcionesDecimales)
             } catch (error) {
               document.getElementById("HCNombreCliente").value = ""
