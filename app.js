@@ -1981,9 +1981,11 @@ function listarSolicitudes(){
 
             try {
               document.getElementById("HCNombreCliente").value = ultimoConsumo.NOMBRE_CLT
+              document.getElementById("HCFechaIngreso").value = ultimoConsumo.FECHA_INGRESO
               document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC.toLocaleString("es-DO", opcionesDecimales)
             } catch (error) {
               document.getElementById("HCNombreCliente").value = ""
+              document.getElementById("HCFechaIngreso").value = ""
               document.getElementById("HCEnergiaAcumulada").value = ""
               contenedorExis.innerHTML = "<h4 class='text-danger text-center'>Cliente no pertenecia al PMN en el año seleccionado.</h4>"
               alertas("Error al cargar los datos. Verifique el NIC.", "error");
