@@ -1982,6 +1982,7 @@ function listarSolicitudes(){
             try {
               document.getElementById("HCNombreCliente").value = ultimoConsumo.NOMBRE_CLT
               document.getElementById("HCFechaIngreso").value = ultimoConsumo.FECHA_INGRESO
+              console.log(ultimoConsumo.FECHA_INGRESO);
               document.getElementById("HCEnergiaAcumulada").value = ultimoConsumoEC.toLocaleString("es-DO", opcionesDecimales)
             } catch (error) {
               document.getElementById("HCNombreCliente").value = ""
