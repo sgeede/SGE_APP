@@ -384,6 +384,9 @@ async function consultarNIC(){
           alertas("Cliente con tarifa Bonoluz.", "error",false);
         }
         
+        if(data.circuito == "VOLG101"){
+          alertas("Cliente en circuito VOLG101.", "error",false);
+        }
 
         alertas("Se cargaron los datos del cliente.", "success");
       }else{
