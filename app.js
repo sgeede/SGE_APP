@@ -11,7 +11,24 @@ window.addEventListener("load", function(event) {
   if(URLactual == "contratistas"){
     listarContratistasVista();
   }
+  
+  if(URLactual == "ingresos"){
+    // Escuchar cambios en ambos inputs
+    document.getElementById("KW_INV_IZ").addEventListener("input", validarInyeccionCero);
+    document.getElementById("KWP_PAN_IZ").addEventListener("input", validarInyeccionCero);
+  }
 
+function validarInyeccionCero() {
+    let KW_INV_IZ = document.getElementById("KW_INV_IZ").value.trim();
+    let KWP_PAN_IZ = document.getElementById("KWP_PAN_IZ").value.trim();
+    let indicadorIZ = document.getElementById("indicadorIZ");
+  
+    if (KW_INV_IZ !== "" || KWP_PAN_IZ !== "") {
+      indicadorIZ.textContent = "Cliente en inyección cero";
+    } else {
+      indicadorIZ.textContent = "";
+    }
+  }
 
   // let tiempoInactividad = 5000; // Tiempo en milisegundos (ejemplo: 3000 ms = 3 segundos)
   // let temporizador;
@@ -1093,7 +1110,9 @@ async function guardarSolicitud(){
   generacionPaneles = document.getElementById("generacionPaneles").value.replace(",",""),
   potSolicitadaPaneles = document.getElementById("potSolicitadaPaneles").value.replace(",",""),
   KW_INV_INST_ACT = document.getElementById("KWInstaladoInvAntes").value.replace(",",""),
-  KW_PAN_INST_ACT = document.getElementById("KWInstaladoPanAntes").value.replace(",","");
+  KW_PAN_INST_ACT = document.getElementById("KWInstaladoPanAntes").value.replace(",",""),
+  KW_INV_IZ = document.getElementById("KW_INV_IZ").value.replace(",",""),
+  KWP_PAN_IZ = document.getElementById("KWP_PAN_IZ").value.replace(",","");
 
   if(nic == "" || nic == 0){
     alertas("Debe ingresar un contrato.","error");
@@ -1129,7 +1148,9 @@ async function guardarSolicitud(){
       KW_INV_INST_ACT:KW_INV_INST_ACT,
       KW_PAN_INST_ACT:KW_PAN_INST_ACT,
       CON_TRANSFORMADOR:conexionTransformador,
-      ID_REP_AUT:ID_REP_AUT
+      ID_REP_AUT:ID_REP_AUT,
+      KW_INV_IZ:KW_INV_IZ,
+      KWP_PAN_IZ:KWP_PAN_IZ
     },
     success: function(data) {
       if (data && Object.keys(data).length > 0) {
