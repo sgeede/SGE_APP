@@ -11,7 +11,7 @@ window.addEventListener("load", function(event) {
   if(URLactual == "contratistas"){
     listarContratistasVista();
   }
-  
+
   if(URLactual == "ingresos"){
     // Escuchar cambios en ambos inputs
     document.getElementById("KW_INV_IZ").addEventListener("input", validarInyeccionCero);
@@ -29,6 +29,8 @@ function validarInyeccionCero() {
       indicadorIZ.textContent = "";
     }
   }
+  
+
 
   // let tiempoInactividad = 5000; // Tiempo en milisegundos (ejemplo: 3000 ms = 3 segundos)
   // let temporizador;
@@ -801,7 +803,9 @@ function generarObservacion(){
     obsCircuito = document.getElementById("obsCircuito").value,
     obsCt = document.getElementById("obsCt").value,
     obsCtransf = document.getElementById("obsCtransf").value,
-    obsContransf = document.getElementById("obsContransf").value;
+    obsContransf = document.getElementById("obsContransf").value,
+    KW_INV_IZ = document.getElementById("KW_INV_IZ").value,
+    KWP_PAN_IZ = document.getElementById("KWP_PAN_IZ").value;
 
   let descripcion = "Circuito: "+obsCircuito+"\n"+"CT: "+obsCt+"\n"+"Transformador: "+obsCtransf+"\n"+obsContransf;;
 
@@ -1179,6 +1183,7 @@ async function guardarSolicitud(){
     error: function(xhr, status, error) {
       alertas("Error al registrar la soliciud.", "error");
       console.error('Request failed:', status, error);
+      console.error('Respuesta completa:', xhr.responseText);
     }
   });  
 }
@@ -1253,7 +1258,9 @@ async function modificarSolicitud(){
   capacidadInversores = document.getElementById("capacidadInversores").value.replace(",",""),
   generacionPaneles = document.getElementById("generacionPaneles").value.replace(",",""),
   potSolicitadaPaneles = document.getElementById("potSolicitadaPaneles").value.replace(",",""),
-  CoordenadasCliente = document.getElementById("CoordenadasCliente").value;
+  CoordenadasCliente = document.getElementById("CoordenadasCliente").value,
+  KW_INV_IZ = document.getElementById("KW_INV_IZ").value.replace(",",""),
+  KWP_PAN_IZ = document.getElementById("KWP_PAN_IZ").value.replace(",","");
   
   $.ajax({
     url: RUTACONSULTAS + 'ModificarSolicitud' + '.php',
@@ -1272,7 +1279,9 @@ async function modificarSolicitud(){
       CON_TRANSFORMADOR:conexionTransformador,
       ID_REP_AUT:ID_REP_AUT,
       CoordenadasCliente:CoordenadasCliente,
-      SidUbicacionInstalacion:SidUbicacionInstalacion
+      SidUbicacionInstalacion:SidUbicacionInstalacion,
+      KW_INV_IZ:KW_INV_IZ,
+      KWP_PAN_IZ:KWP_PAN_IZ
     },
     success: function(data) {
       if (data && Object.keys(data).length > 0) {
@@ -1294,6 +1303,8 @@ async function modificarSolicitud(){
     },
     error: function(xhr, status, error) {
       console.log(error)
+      console.error('Respuesta completa:', xhr.responseText);
+
       alertas("Error al actualizada la soliciud.", "error");
       console.error('Request failed:', status, error);
     }
@@ -1657,8 +1668,11 @@ async function consultarSolicitud(){
     SConTransformador = document.getElementById("SConTransformador"),
     KWInstaladoPanAntes = document.getElementById("KWInstaladoPanAntes"),
     KWInstaladoInvAntes = document.getElementById("KWInstaladoInvAntes"),
-    idEstadoCivilRepresentanteAut = document.getElementById("idEstadoCivilRepresentanteAut");
-    SidUbicacionInstalacion = document.getElementById("SidUbicacionInstalacion");
+    idEstadoCivilRepresentanteAut = document.getElementById("idEstadoCivilRepresentanteAut"),
+    SidUbicacionInstalacion = document.getElementById("SidUbicacionInstalacion"),
+    KW_INV_IZ = document.getElementById("KW_INV_IZ"),
+    KWP_PAN_IZ = document.getElementById("KWP_PAN_IZ"),
+    INDICADOR_IZ = document.getElementById("INDICADOR_IZ");
     
     if(NIC == "" || NIC.length < 7 || isNaN(NIC)){
       alertas("Verifique el NIC ingresado", "error");
@@ -1687,6 +1701,9 @@ async function consultarSolicitud(){
         valorRadiacion.value = data.RADIACION;
         KWInstaladoPanAntes.value = data.KW_PAN_INST_ACT;
         KWInstaladoInvAntes.value = data.KW_INV_INST_ACT;
+        KW_INV_IZ.value = data.KW_INV_IZ;
+        KWP_PAN_IZ.value = data.KWP_PAN_IZ;
+        INDICADOR_IZ.value = data.INDICADOR_IZ;
 
         SidUbicacionInstalacion. value = data.ID_UBI_PROY;
         STarifa.value = data.TARIFA;
