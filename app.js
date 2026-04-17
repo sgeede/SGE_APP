@@ -13,7 +13,6 @@ window.addEventListener("load", function(event) {
   }
 
   if(URLactual == "ingresos"){
-    // Escuchar cambios en ambos inputs
     document.getElementById("KW_INV_IZ").addEventListener("input", validarInyeccionCero);
     document.getElementById("KWP_PAN_IZ").addEventListener("input", validarInyeccionCero);
   }
@@ -1395,6 +1394,9 @@ async function cargarDatosCartaNoObjecion(){
           KWP: data[0].KWP,
           KW_INV_INST_ACT: data[0].KW_INV_INST_ACT, 
           KW_PAN_INST_ACT: data[0].KW_PAN_INST_ACT,
+          KW_INV_IZ: data[0].KW_INV_IZ, 
+          KWP_PAN_IZ: data[0].KWP_PAN_IZ,
+          INDICADOR_IZ: data[0].INDICADOR_IZ,
           INVER: data[0].INVERSORES,
           PANELES: data[0].PANELES,
           NOMBRE_CTR: data[0].NOMBRE_CTR,
