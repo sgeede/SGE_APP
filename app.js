@@ -816,6 +816,14 @@ function generarObservacion(){
     descripcion += "\n\nCon una potencia instalada de "+KWInstaladoPanAntes+ " y aumentará "+potSolicitadaPaneles+" para un total de " + totalAumentoKWP.toLocaleString("es-DO", opcionesDecimales) + ". En inversores instalado " + KWInstaladoInvAntes + " y aumentará " + capacidadInversores + " para un total de "+totalAumentoKWINVER.toLocaleString("es-DO", opcionesDecimales);
   }
 
+  KW_INV_IZ = parseFloat(KW_INV_IZ) || 0;
+  KWP_PAN_IZ = parseFloat(KWP_PAN_IZ) || 0;
+
+if (KW_INV_IZ > 1 || KWP_PAN_IZ > 1) {
+    descripcion += "\n\nSistema de inyeccion cero de "+KW_INV_IZ+"Kw y "+KWP_PAN_IZ+"Kwp."
+    // console.log("Al menos uno tiene valor mayor a 1");
+}
+
   document.getElementById("datosCopiarObservacion").value = descripcion;  
 }
 
