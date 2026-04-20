@@ -406,6 +406,10 @@ async function consultarNIC(){
           alertas("Cliente en circuito VOLG101.", "error",false);
         }
 
+        if(data.centro_transformacion == "N54429"){
+          alertas("Cliente en CT N54429.", "error",false);
+        }
+
         alertas("Se cargaron los datos del cliente.", "success");
       }else{
         
