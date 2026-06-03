@@ -1407,6 +1407,7 @@ async function cargarDatosCartaNoObjecion(){
           DESC_SOL: data[0].DESC_SOL,
           CIRCUITO: data[0].CIRCUITO,
           ID_SOL: data[0].ID_SOL,
+          FECHA_REGISTRO: data[0].FECHA_REGISTRO,
         };
         
         let queryParamsParametrosObj = Object.entries(parametrosObj)
