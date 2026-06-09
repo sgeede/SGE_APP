@@ -942,7 +942,7 @@ function guardarDetalleInversores(ID_SOL){
     data: {ID_SOL:ID_SOL,INVERSORES:detInversores},
     success: function(data) {
       // console.log(data)
-      if (data && Object.keys(data).length > 0) {
+      if (data && Object.keys(data).length >= 0) {
         // console.log(data)
       }else{
         return 0;
