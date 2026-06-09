@@ -942,7 +942,7 @@ function guardarDetalleInversores(ID_SOL){
     data: {ID_SOL:ID_SOL,INVERSORES:detInversores},
     success: function(data) {
       // console.log(data)
-      if (data && Object.keys(data).length >= 0) {
+      if (data && Object.keys(data).length > 0) {
         // console.log(data)
       }else{
         return 0;
@@ -1056,7 +1056,7 @@ function validarDatosCompletos(){
     return false;
   }else if (capacidadInversores === "" || parseFloat(capacidadInversores) == 0){
     alertas("Debe ingresar los datos del inversor.", "error");
-    // return false;
+    return false;
   }else if (generacionPaneles === "" || parseFloat(generacionPaneles) == 0 ){
     alertas("Debe ingresar los datos de los paneles.", "error");
     return false;
