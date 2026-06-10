@@ -978,7 +978,7 @@ function guardarDetallePaneles(ID_SOL){
   });
 };
 
-function validarDatosCompletos(){
+async function validarDatosCompletos(){
   let detInversores = detalleInversores();
   let detPaneles = detallePaneles();
 
@@ -998,8 +998,26 @@ function validarDatosCompletos(){
   });
 
   if(invVacios == detInversores.length){
-    alertas("No ha ingresado los inversores.", "error");
-    return false;
+    // alertas("No ha ingresado los inversores.", "error");
+   
+        const result = await Swal.fire({
+          title: "¿Continuar sin inversores?",
+          text: "El proyecto se registrará sin capacidad en inversores.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Ingresar capacidad",
+          confirmButtonText: "Sí, continuar!"
+        });
+
+        if(result.isConfirmed){
+          alertas("Proyecto ingresado sin inversores", "warning");
+        }else{
+          return false;
+        };
+    
+    // return false;
   }
 
   let KWInstaladoInvAntes = document.getElementById("KWInstaladoInvAntes"),
@@ -1025,8 +1043,24 @@ function validarDatosCompletos(){
   if(!datosPancompletos || !datosInvcompletos){return;}
 
   if(panVacios == detPaneles.length){
-    alertas("No ha ingresado los paneles.", "error");
-    return false;
+    // alertas("No ha ingresado los paneles.", "error");
+    
+    const result = await Swal.fire({
+          title: "¿Continuar sin paneles?",
+          text: "El proyecto se registrará sin capacidad en paneles.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Ingresar capacidad",
+          confirmButtonText: "Sí, continuar!"
+        });
+
+        if(result.isConfirmed){
+          alertas("Proyecto ingresado sin paneles", "warning");
+        }else{
+          return false;
+        };
   }
 
   let nic = document.getElementById("NIC").value,
@@ -1092,7 +1126,7 @@ async function guardarSolicitud(){
     document.getElementById("registrarSolicitud").disabled = false;
   }, 2000);
 
-  if(!validarDatosCompletos()){
+  if(!await validarDatosCompletos()){
     return;
   }
 
@@ -1864,116 +1898,110 @@ function activarDataTable(){
   })
 }
 
-function listarSolicitudes(){
+function listarSolicitudes() {
   $.ajax({
-      url: RUTACONSULTAS + "listarSolicitudes" + ".php",
-      method: "POST",
-      dataType: 'json',
-      success: function(data) {
-        if (data && Object.keys(data).length > 0) {
-          // console.log(data)
-          contenedorExis = document.getElementById("listarSolicitudes");
-          let solicitudes = JSON.parse(data);
-          solicitudes = Object.entries(solicitudes).map(([key, value]) => value);
+    url: RUTACONSULTAS + "listarSolicitudes.php",
+    method: "POST",
+    dataType: 'json',
+    success: function(data) {
+      if (!data) return;
 
-          // console.log(solicitudes)
-          
-          let datos = "";
-          // Lista todos los datos de los usuarios y los almacena en la variable datos
-          solicitudes.forEach(element => {
-              carga = `
-              <tr>
-                  <td>${element.FECHA_REGISTRO}</td>
-                  <td>${element.NIC}</td>
-                  <td>${element.NOMBRE_CLT}</td>
-                  <td>${element.DESC_SOL}</td>
-                  <td>${element.TARIFA}</td>
-                  <td>${element.SECTOR}</td>
-                  <td>${element.NOMBRE_CTR}</td>
-                  <td>${element.TELEFONO_CTR}</td>
-                  <td>${element.INVERSORES_KW.toLocaleString("es-DO", opcionesDecimales)}</td>
-                  <td>${element.KWP.toLocaleString("es-DO", opcionesDecimales)}</td>
-                  <td>${element.KW_INV_INST_ACT.toLocaleString("es-DO", opcionesDecimales)}</td>
-                  <td>${element.KW_PAN_INST_ACT.toLocaleString("es-DO", opcionesDecimales)}</td>
-                  <td>${element.PROM_CSMO.toLocaleString("es-DO", opcionesDecimales)}</td>
-                  <td>${element.GEN_SISTEMA.toLocaleString("es-DO", opcionesDecimales)}</td>
-                  <td>${element.NOMBRE}</td>
-                  <td>${element.NOMBRE_ULT_CAMBIO}</td>
-                  <td>${element.FECHA_ULT_CAMBIO}</td>
-              </tr>
-              `
-              datos += carga;
-          });
-
-          contenedor = `<div class="card recent-sales overflow-auto">
-          <div class="card-body bg-white">
-            <h5 class="card-title">Solicitudes <span>| Lista de solicitudes</span></h5>
-            <table class="table table-striped datatable">
-              <thead>
-                <tr>
-                  <th scope="col">FECHA REGISTRO</th>
-                  <th scope="col">NIC</th>
-                  <th scope="col">NOMBRE CLIENTE</th>
-                  <th scope="col">SOLICITUD</th>
-                  <th scope="col">TARIFA</th>
-                  <th scope="col">SECTOR</th>
-                  <th scope="col">CONTRATISTA</th>
-                  <th scope="col">TELEFONO CONTRATISTA</th>
-                  <th scope="col">KW INVERSORES</th>
-                  <th scope="col">KWP</th>
-                  <th scope="col">KW INVERSORES EXISTENTE</th>
-                  <th scope="col">KWP EXISTENTE</th>
-                  <th scope="col">PROM. CONSUMO</th>
-                  <th scope="col">GEN. SISTEMA</th>
-                  <th scope="col">USUARIO INGRESO</th>
-                  <th scope="col">USUARIO ULT. CAMBIO</th>
-                  <th scope="col">FECHA ULT. CAMBIO</th>
-                </tr>
-              </thead>
-                  <tbody>
-                      ${datos}
-                  </tbody>
-              </table>
-              </div>
-            </div>
-            `; 
-          contenedorExis.innerHTML = contenedor;
- 
-          new DataTable('.datatable', {
-            "columnDefs": [
-              { 
-                "targets": [0,16], // Reemplaza 0 con el í­ndice de tu columna de fechas
-                "type": "moment-date",
-                "render": function (data, type, row, meta) {
-                    if (type === 'display' && data) {
-                        // Formatear la fecha a "DD/MM/YYYY" con ceros a la izquierda
-                        var formattedDate = moment(data).format("DD/MM/YYYY");
-                        return formattedDate;
-                    } else {
-                        return data;
-                    }
-                }
-            },
-              { 
-                  "targets": "_all",
-                  "render": function (data, type, row, meta) {
-                      return type === 'display' && typeof data === 'string' ?
-                          '<div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="' + data + '">' + data + '</div>' :
-                          data;
-                  }
-              }
-          ],
-            order: [[0, 'desc']],
-            scrollX: true,
-            pagingType: 'full_numbers'
-        });
-        }
-      },
-      error: function(xhr, status, error) {
-        console.log(error)
+      let solicitudes = (typeof data === 'string') ? JSON.parse(data) : data;
+      if (typeof solicitudes === 'object' && !Array.isArray(solicitudes)) {
+        solicitudes = Object.values(solicitudes);
       }
-    });
-  }
+
+      $("#loadingSpinner").hide();
+      $("#tablaSolicitudes").show();
+
+      new DataTable('#tablaSolicitudes', {
+        data: solicitudes,
+        deferRender: true,
+        scrollX: true,
+        autoWidth: false, // Desactiva el cálculo automático y flexible de DataTables
+        order: [[0, 'desc']],
+        pagingType: 'full_numbers',
+        
+        // Hardcodeamos los anchos exactos en píxeles columna por columna
+        columns: [
+          { data: "FECHA_REGISTRO", width: "110px" },
+          { data: "NIC", width: "90px" },
+          { data: "NOMBRE_CLT", width: "220px" },
+          { data: "DESC_SOL", width: "180px" },
+          { data: "TARIFA", width: "80px" },
+          { data: "SECTOR", width: "140px" },
+          { data: "NOMBRE_CTR", width: "180px" },
+          { data: "TELEFONO_CTR", width: "120px" },
+          { 
+            data: "INVERSORES_KW", 
+            width: "120px",
+            render: (data, type) => type === 'display' && data ? Number(data).toLocaleString("es-DO", opcionesDecimales) : (data || '0.00')
+          },
+          { 
+            data: "KWP", 
+            width: "90px",
+            render: (data, type) => type === 'display' && data ? Number(data).toLocaleString("es-DO", opcionesDecimales) : (data || '0.00')
+          },
+          { 
+            data: "KW_INV_INST_ACT", 
+            width: "140px",
+            render: (data, type) => type === 'display' && data ? Number(data).toLocaleString("es-DO", opcionesDecimales) : (data || '0.00')
+          },
+          { 
+            data: "KW_PAN_INST_ACT", 
+            width: "130px",
+            render: (data, type) => type === 'display' && data ? Number(data).toLocaleString("es-DO", opcionesDecimales) : (data || '0.00')
+          },
+          { 
+            data: "PROM_CSMO", 
+            width: "120px",
+            render: (data, type) => type === 'display' && data ? Number(data).toLocaleString("es-DO", opcionesDecimales) : (data || '0.00')
+          },
+          { 
+            data: "GEN_SISTEMA", 
+            width: "120px",
+            render: (data, type) => type === 'display' && data ? Number(data).toLocaleString("es-DO", opcionesDecimales) : (data || '0.00')
+          },
+          { data: "NOMBRE", width: "140px" },
+          { data: "NOMBRE_ULT_CAMBIO", width: "140px" },
+          { data: "FECHA_ULT_CAMBIO", width: "120px" }
+        ],
+        
+        columnDefs: [
+          // 1. Tratamiento e inyección de formato para las Fechas (Columnas 0 y 16)
+          { 
+            targets: [0, 16],
+            render: function (data, type) {
+              if (type === 'display' && data) {
+                let fechaFormateada = moment(data).format("DD/MM/YYYY");
+                return `<div class="celda-protegida" title="${fechaFormateada}">${fechaFormateada}</div>`;
+              }
+              return data;
+            }
+          },
+          // 2. EL BLINDAJE REAL: Envuelve CUALQUIER otra columna automáticamente en el DIV contenedor protector
+          {
+            targets: "_all",
+            render: function (data, type) {
+              if (type === 'display' && data !== null && data !== undefined) {
+                // Evitamos volver a envolver si la columna ya fue procesada por el formateador de fechas superior
+                if (String(data).includes('celda-protegida')) return data;
+                
+                // Limpiamos strings de posibles etiquetas e inyectamos el div con un 'title' para que al dejar el cursor encima se lea el texto completo
+                let textoLimpio = String(data).replace(/<[^>]*>/g, '');
+                return `<div class="celda-protegida" title="${textoLimpio}">${data}</div>`;
+              }
+              return data;
+            }
+          }
+        ]
+      });
+    },
+    error: function(xhr, status, error) {
+      console.error("Error crítico: ", error);
+    }
+  });
+}
 
 
   function obtenerUltimoNoNulo(array) {
