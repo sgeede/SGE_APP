@@ -1,5 +1,6 @@
 const RUTACONSULTAS = "./assets/db/peticiones/"; 
 
+
 window.addEventListener("load", function(event) {
   var URLactual = window.location.pathname;
   URLactual = URLactual.replace("/", "")
