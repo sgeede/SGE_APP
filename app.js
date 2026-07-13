@@ -1,6 +1,5 @@
 const RUTACONSULTAS = "./assets/db/peticiones/"; 
 
-
 window.addEventListener("load", function(event) {
   var URLactual = window.location.pathname;
   URLactual = URLactual.replace("/", "")
@@ -1032,7 +1031,7 @@ async function validarDatosCompletos(){
   detPaneles.forEach(panel => {
     if(panel[0] != "" || panel[1] != ""){
       if(panel[0] == "" || panel[1] == "" || panel[2] == "" || panel[3] == ""){
-        alertas("Debe completar los datos de los paneles.", "error");
+        // alertas("Debe completar los datos de los paneles.", "error");
         datosPancompletos = false;
         return false;
       }
@@ -1041,7 +1040,7 @@ async function validarDatosCompletos(){
     }
   });
 
-  if(!datosPancompletos || !datosInvcompletos){return;}
+  // if(!datosPancompletos || !datosInvcompletos){return;}
 
   if(panVacios == detPaneles.length){
     // alertas("No ha ingresado los paneles.", "error");
@@ -2190,6 +2189,90 @@ function listarSolicitudes() {
         }
       });
     }
+
+    document.getElementById('btnConsultarHistorico').addEventListener('click', function() {
+        listarHistoricoCUR(); 
+    });
+    async function listarHistoricoCUR() {
+      // 1. Apuntamos a los IDs reales de tu nuevo diseño HTML
+      let NIC = document.getElementById("nicConsulta").value.trim();
+      let tbody = document.getElementById('bodyHistoricoNic');
+      
+      if (NIC === "" || NIC.length !== 7 || isNaN(NIC)) {
+          alert("Por favor, ingrese un NIC válido de 7 dígitos."); // Cambia por tu función alertas() si la tienes global
+          return;
+      }
+
+      // Loader visual en la tabla mientras busca
+      tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4"><span class="spinner-border spinner-border-sm text-primary"></span> Cargando...</td></tr>`;
+
+      // 2. Construimos los datos respetando la estructura que espera tu backend al inicio del archivo
+      const formData = new FormData();
+      formData.append('accion', 'consultar_historico');
+      formData.append('nic', NIC);
+
+      // Usamos fetch (como en tu vista original) o puedes seguir usando $.ajax adaptando la data.
+      fetch(window.location.href, { 
+          method: 'POST', 
+          body: formData 
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Validación de seguridad si tu backend retorna estructura de accesos
+          if (data && data[0] && data[0].ACCESO == 0) {
+              alert("No tienes permisos suficientes.");
+              return;
+          }
+
+          if (data.status === 'success') {
+              // Llenar los inputs superiores de control
+              document.getElementById('HCAplicaCur').value = data.aplica_cur || '---';
+              tbody.innerHTML = '';
+
+              if (data.historico && data.historico.length > 0) {
+                  // Seteamos el último período (primer registro)
+                  const topRow = data.historico[0];
+                  document.getElementById('HCAnoMes').value = topRow.ano_mes || '---';
+                  document.getElementById('HCAno').value = topRow.ano || '---';
+                  document.getElementById('HCMes').value = topRow.mes || '---';
+
+                  // Inyectamos las filas estilizadas en la tabla
+                  data.historico.forEach((row, index) => {
+                      const tr = document.createElement('tr');
+                      tr.innerHTML = `
+                          <td class="ps-4 fw-medium text-secondary">${index + 1}</td>
+                          <td class="fw-bold font-monospace text-muted">${NIC}</td>
+                          <td><span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 font-monospace fw-bold fs-6">${row.ano_mes}</span></td>
+                          <td class="text-dark font-monospace">${row.ano}</td>
+                          <td class="text-dark font-monospace">${row.mes}</td>
+                          <td class="pe-4 text-end">
+                              <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-10 rounded-pill px-2.5 py-1 small fw-semibold">Histórico</span>
+                          </td>
+                      `;
+                      tbody.appendChild(tr);
+                  });
+              } else {
+                  normarlizarCamposVacios(tbody, NIC);
+              }
+          } else {
+              alert("Error al cargar los datos. Verifique el NIC.");
+              normarlizarCamposVacios(tbody, NIC);
+          }
+      })
+      .catch(error => {
+          console.error("Error:", error);
+          alert("Fallo al consultar.");
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-danger small">Error de red.</td></tr>`;
+      });
+  }
+
+  function normarlizarCamposVacios(tbody, nic) {
+      document.getElementById('HCAnoMes').value = '---';
+      document.getElementById('HCAno').value = '---';
+      document.getElementById('HCMes').value = '---';
+      document.getElementById('HCAplicaCur').value = '---';
+      tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted small">No hay histórico para el NIC ${nic}.</td></tr>`;
+  }
 
   function listarContratistasVista(){
     $.ajax({
