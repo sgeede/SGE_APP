@@ -1113,8 +1113,8 @@ async function validarDatosCompletos(){
     alertas("Debe seleccionar un contratista.", "error");
     return false;
   }else if (CoordenadasCliente === ""){
-    alertas("Debe ingresar las coordenadas.", "error");
-    return false;
+    // alertas("Debe ingresar las coordenadas.", "error");
+    // return false;
   }
 
   return true;
